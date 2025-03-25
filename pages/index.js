@@ -61,6 +61,8 @@ export default function Home() {
   const [showGrowthPopup, setShowGrowthPopup] = useState(false);
   const [edacchiReply, setEdacchiReply] = useState('');
   const [showExtraMenu, setShowExtraMenu] = useState(false);
+  const [edacchiFinalMessageShown, setEdacchiFinalMessageShown] = useState(false);
+
 
 
 
@@ -76,7 +78,11 @@ export default function Home() {
       console.log("録音を停止しました");
   
       handleAnalyzeClick();
+
+    // 🌸 フィナーレメッセージがもう出た後ならGPT呼ばない
+    if (!edacchiFinalMessageShown) {
       getEdacchiReply(transcript);
+    }
     } else {
       setTranscript('');
       setSentiment('感情分析結果を取得中...');
@@ -96,6 +102,12 @@ export default function Home() {
           setGrowthMessage(`🌱 ${labels[nextLevel]}になったよ！`);
           setShowGrowthPopup(true);
           setTimeout(() => setShowGrowthPopup(false), 3000);
+        }
+
+          // 🌸 20回超えたら特別なメッセージを返す（1回だけ）
+        if (newCount > 2 && !edacchiFinalMessageShown) {
+          setEdacchiReply("えだっち、そろそろあたらしいおうちにいかないといけないんだ。とってもたのしかったよ。ありがとう！えだっちメニューをおしてリアルにする！っていうボタンをおしてほしいな。みんなにあってみたいんだ！");
+          setEdacchiFinalMessageShown(true);
         }
         return newCount;
       })
@@ -376,7 +388,7 @@ export default function Home() {
       <Head>
         <meta charSet="UTF-8" />
         <title>えだっち</title>
-        <link rel="stylesheet" href="/styles.css" />
+        {/* <link rel="stylesheet" href="/globals.css" /> */}
       </Head>
 
       {!hasStarted ? (
