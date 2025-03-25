@@ -105,7 +105,7 @@ export default function Home() {
         }
 
           // 🌸 20回超えたら特別なメッセージを返す（1回だけ）
-        if (newCount > 2 && !edacchiFinalMessageShown) {
+        if (newCount > 12 && !edacchiFinalMessageShown) {
           setEdacchiReply("えだっち、そろそろあたらしいおうちにいかないといけないんだ。とってもたのしかったよ。ありがとう！えだっちメニューをおしてリアルにする！っていうボタンをおしてほしいな。みんなにあってみたいんだ！");
           setEdacchiFinalMessageShown(true);
         }
